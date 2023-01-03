@@ -42,17 +42,11 @@ def extractText(inFile , Zoomfactor):
     for PageID , pages in enumerate(tqdm.tqdm(file)):
         textList = ''
         rectList = []
-        #qmat = fitz.Matrix(Zoomfactor,Zoomfactor)
-        #pix = pages.get_pixmap(matrix=mat)
         text = pages.getText('words')
-        #imageData = pix.getImageData("png")
-        #nparr = np.frombuffer(imageData, np.uint8)
-        #img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         block=0
         lines = 0
         
         for words in text:
-            #cv2.rectangle(img,(int(words[0]*Zoomfactor),int(words[1]*Zoomfactor)),(int(words[2]*Zoomfactor),int(words[3]*Zoomfactor)),(255,0,0),2,)
             
             if block<words[5]:
                 block = words[5]
@@ -63,14 +57,8 @@ def extractText(inFile , Zoomfactor):
                 textList+="\n"
             textList+= words[4]+" "
             rectList.append([int(words[0]*Zoomfactor),int(words[1]*Zoomfactor),int(words[2]*Zoomfactor),int(words[3]*Zoomfactor)])
-            
-            #print("words",words)
         pdfDict[PageID]=[textList,rectList]
-        # cv2.imshow("show image",img)
-        # if cv2.waitKey(0):
-        #     cv2.destroyAllWindows()
-        #print("text",text)
-        #print("texts : ",textList)
+       
     return pdfDict
 
 
@@ -163,26 +151,27 @@ def plotPdf(inFile,Zoomfactor=1):
         yield textList,rectList, img
 
 if __name__ =="__main__":
-    file = "/home/shyamal/Documents/FullStack/ImageProcessing/AutoContentSearch/assets/TestData/3c976c41-f8ca-43fd-8860-51d09e4fb365.pdf"
+    file = "/home/shyamal/Documents/FullStack/ImageProcessing/AnnualReportData/TestData/3c976c41-f8ca-43fd-8860-51d09e4fb365.pdf"
     
     ########################
     # extractText(file,1)
 
     # #########################
 
-    # for PageID , img in yeildImage(file,2):
-    #     print('page :',PageID,img.shape)
+    for PageID , img in yeildImage(file,2):
+         print('page :',PageID,img.shape)
 
-
-    # for text, rect , img in plotPdf(file,2):
-    #     print('page :',text,img.shape)
-    #     cv2.imshow("show image",img)
-    #     if cv2.waitKey(0):
-    #         cv2.destroyAllWindows()
+    def plotPdftest(file):
+        for text, rect , img in plotPdf(file,2):
+            print('page :',text,img.shape)
+            cv2.imshow("show image",img)
+            if cv2.waitKey(0):
+                cv2.destroyAllWindows()
     
     
     ################################
-    for text , rect  in generateText(file,2):
-        print(text)
-        break
+    def generateText(file):
+        for text , rect  in generateText(file,2):
+            print(text)
+
     ################################

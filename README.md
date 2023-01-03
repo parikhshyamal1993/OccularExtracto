@@ -6,11 +6,23 @@ This project is a part of content extraction Product which is in process of deve
 
 we are uisng python 3.6.9 version . 
 
-creat virtual environment :
+1) Creat virtual environment :
 
 ```shell
 python -m venv NLPEnv
 
+source NLPEnv/bin/activate
+
 ```
+
+2) Install requiremnets :
+
+```python
+python Test.py
+```
+
+
+
+
 
 
